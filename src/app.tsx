@@ -94,7 +94,7 @@ export const layout: RunTimeLayoutConfig = ({initialState, setInitialState}) => 
 
 loadLogin()
 export const request: RequestConfig = {
-  baseURL: isDev ? '/api' : 'http://localhost:8088',
+  baseURL: API_URL,
   requestInterceptors: [
     (req) => {
       req.headers['X-Auth-Token'] = getToken() || '';
