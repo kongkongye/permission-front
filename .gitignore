@@ -38,5 +38,3 @@ screenshot
 .eslintcache
 
 build
-
-config/config.prod.ts
