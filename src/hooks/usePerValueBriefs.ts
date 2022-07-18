@@ -5,8 +5,8 @@ import {useEffect, useState} from 'react';
 /**
  * 因为有typeCode参数，因此不能放models目录内，不能搞成全局的
  */
-const usePerValueBriefs = (typeCode?: string) => {
-  const {data, refresh} = useListPerValueBriefs(typeCode);
+const usePerValueBriefs = (typeCode?: string, filterCode?: string, filterContainSub?: boolean) => {
+  const {data, refresh} = useListPerValueBriefs(typeCode, filterCode, filterContainSub);
   const [codes, setCodes] = useState<{ [key: string]: any }>({});
   const [treeData, setTreeData] = useState<any[]>([]);
 
@@ -19,7 +19,8 @@ const usePerValueBriefs = (typeCode?: string) => {
       for (const e of data) {
         e.key = e.code;
         e.title = e.name;
-        // e.value = e.code;
+        e.label = e.name;
+        e.value = e.code;
       }
 
       //codes

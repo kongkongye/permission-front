@@ -24,14 +24,16 @@ export function useListPerValues(typeCode?: string) {
   });
 }
 
-export function useListPerValueBriefs(typeCode?: string) {
+export function useListPerValueBriefs(typeCode?: string, filterCode?: string, filterContainSub?: boolean) {
   return usePost<PerAPI.PerValue[]>('/admin/per/queryPerValueBrief', {
     data: qs.stringify({
       typeCode: typeCode || 'none',
+      filterCodes: filterCode ? JSON.stringify([filterCode]) : null,
+      filterContainSub,
       queryType: 'list',
     }),
   }, {
-    refreshDeps: [typeCode],
+    refreshDeps: [typeCode, filterCode, filterContainSub],
   });
 }
 
@@ -191,7 +193,7 @@ export async function pageBiz(params: any, sort: any, filter: any) {
 }
 
 export function listPerTypes(params: any) {
-  return post<PerAPI.PerValue[]>('/admin/per/queryPerType', {
+  return post<PerAPI.PerType[]>('/admin/per/queryPerType', {
     data: qs.stringify({
       ...params,
       queryType: 'list',

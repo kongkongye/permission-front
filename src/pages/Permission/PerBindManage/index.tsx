@@ -1,24 +1,19 @@
-import EditForm from '@/components/EditForm';
 import {
   addPerBind,
   delPerBind,
-  getPerValue,
   listPerBindBriefs,
-  listPerTypes,
-  savePerValue
+  listPerTypes
 } from '@/services/permission/api';
 import {
-  ProFormInstance,
-  ProFormSelect,
-  ProFormText
+  ProFormGroup,
+  ProFormSelect, ProFormSwitch,
+  ProFormText, ProFormTreeSelect
 } from '@ant-design/pro-components';
-import {Button, Form, Layout, message, Tree} from 'antd';
+import {Form, Layout, message, Tree} from 'antd';
 import {Content} from 'antd/es/layout/layout';
-import {Key} from 'antd/es/table/interface';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import styles from './index.less';
 import usePerValueBriefs from "@/hooks/usePerValueBriefs";
-import PerValueForm from "@/pages/Permission/PerManage/components/PerValueForm";
 import BindNodeSel from "@/pages/Permission/PerBindManage/components/BindNodeSel";
 import BindBizSel from "@/pages/Permission/PerBindManage/components/BindBizSel";
 import {FormInstance} from "antd/es";
@@ -33,6 +28,7 @@ const PerManage: React.FC = () => {
         for (const e of res) {
           perTypes_[e.code] = {
             text: e.name,
+            filter: e.filter,
           }
         }
         setPerTypes(perTypes_)
@@ -41,11 +37,20 @@ const PerManage: React.FC = () => {
       }
     })
   }, [])
+  const filterTypeCode = useMemo(() => {
+    if (typeCode) {
+      const perType = perTypes[typeCode]
+      return perType?.filter
+    }
+  }, [typeCode, perTypes])
+  const [filterCode, setFilterCode] = useState<string>();
+  const [filterContainSub, setFilterContainSub] = useState<boolean>(false);
 
   const [bindBizVisible, setBindBizVisible] = useState(false);
   const [bindNodeVisible, setBindNodeVisible] = useState(false);
 
-  const {treeData} = usePerValueBriefs(typeCode)
+  const {treeData} = usePerValueBriefs(typeCode, filterCode, filterContainSub)
+  const {treeData: filterTreeData} = usePerValueBriefs(filterTypeCode)
   const formRef = useRef<FormInstance>(null);
   const [checkedKeys, setCheckedKeys] = useState<string[]>([]);
   const [selBiz, setSelBiz] = useState<PerAPI.Biz>();
@@ -131,6 +136,25 @@ const PerManage: React.FC = () => {
               setTypeCode(undefined)
             },
           }}/>
+          <Form>
+            <ProFormGroup>
+              <ProFormTreeSelect width='md' allowClear disabled={!filterTreeData || filterTreeData.length === 0} label='过滤'
+                                 request={async () => {
+                                   return filterTreeData
+                                 }} params={{
+                filterTreeData
+              }}
+                                 fieldProps={{
+                                   onSelect: setFilterCode,
+                                   onClear: () => {
+                                     setFilterCode(undefined)
+                                   },
+                                 }}/>
+              <ProFormSwitch label="包含子" name="filterContainSub" fieldProps={{
+                onChange: setFilterContainSub,
+              }}/>
+            </ProFormGroup>
+          </Form>
         </Form>
         {typeCode && selNode && <div className={styles.header}>
           <span>权限列表</span>

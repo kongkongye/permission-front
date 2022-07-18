@@ -51,6 +51,7 @@ declare namespace PerAPI {
     code: string;
     name: string;
     note?: string;
+    filter?: string;
   };
   type PerValue = {
     id: number;
@@ -59,9 +60,11 @@ declare namespace PerAPI {
     name: string;
     parent?: string;
     note?: string;
+    filterCode?: string;
 
     key?: string;
     title?: string;
+    label?: string;
     value?: string;
   };
   type PerBind = {

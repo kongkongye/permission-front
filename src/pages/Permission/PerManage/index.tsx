@@ -1,7 +1,14 @@
 import EditForm from '@/components/EditForm';
 import {getPerValue, listPerTypes, savePerValue} from '@/services/permission/api';
-import {ProFormInstance, ProFormSelect} from '@ant-design/pro-components';
-import {Button, Layout, message, Tree} from 'antd';
+import {
+  ProForm,
+  ProFormGroup,
+  ProFormInstance,
+  ProFormSelect,
+  ProFormSwitch,
+  ProFormTreeSelect
+} from '@ant-design/pro-components';
+import {Button, Form, Layout, message, Popover, Tree, TreeSelect} from 'antd';
 import {Content} from 'antd/es/layout/layout';
 import {Key} from 'antd/es/table/interface';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
@@ -19,6 +26,7 @@ const PerManage: React.FC = () => {
         for (const e of res) {
           perTypes_[e.code] = {
             text: e.name,
+            filter: e.filter,
           }
         }
         setPerTypes(perTypes_)
@@ -27,8 +35,17 @@ const PerManage: React.FC = () => {
       }
     })
   }, [])
+  const filterTypeCode = useMemo(() => {
+    if (typeCode) {
+      const perType = perTypes[typeCode]
+      return perType?.filter
+    }
+  }, [typeCode, perTypes])
+  const [filterCode, setFilterCode] = useState<string>();
+  const [filterContainSub, setFilterContainSub] = useState<boolean>(false);
 
-  const {codes, treeData, refresh} = usePerValueBriefs(typeCode)
+  const {codes, treeData, refresh} = usePerValueBriefs(typeCode, filterCode, filterContainSub)
+  const {treeData: filterTreeData} = usePerValueBriefs(filterTypeCode)
   const newFormRef = useRef<ProFormInstance>();
   const editFormRef = useRef<ProFormInstance>();
   const [selectedKeys, setSelectedKeys] = useState<Key[]>([]);
@@ -63,12 +80,35 @@ const PerManage: React.FC = () => {
             setTypeCode(undefined)
           },
         }}/>
+        <Form>
+          <ProFormGroup>
+            <ProFormTreeSelect width='md' allowClear disabled={!filterTreeData || filterTreeData.length === 0}
+                               label='过滤'
+                               request={async () => {
+                                 return filterTreeData
+                               }} params={{
+              filterTreeData
+            }}
+                               fieldProps={{
+                                 onSelect: setFilterCode,
+                                 onClear: () => {
+                                   setFilterCode(undefined)
+                                 },
+                               }}/>
+            <ProFormSwitch label="包含子" name="filterContainSub" fieldProps={{
+              onChange: setFilterContainSub,
+            }}/>
+          </ProFormGroup>
+        </Form>
+
         {typeCode && <div className={styles.header}>
           <span>权限列表</span>
           <div className={styles.toolbar}>
-            <Button type='link' disabled={!selectedKeys || selectedKeys.length === 0} style={{marginRight: '5px'}} onClick={() => {
-              setSelectedKeys([])}
-            }>取消选择</Button>
+            <Button type='link' disabled={!selectedKeys || selectedKeys.length === 0} style={{marginRight: '5px'}}
+                    onClick={() => {
+                      setSelectedKeys([])
+                    }
+                    }>取消选择</Button>
             <EditForm
               formRef={newFormRef}
               title="权限"
@@ -81,7 +121,7 @@ const PerManage: React.FC = () => {
                 return true;
               }}
             >
-              <PerValueForm type={typeCode?perTypes[typeCode].text:null} parent={sel}/>
+              <PerValueForm type={typeCode ? perTypes[typeCode].text : null} parent={sel}/>
             </EditForm>
             <EditForm
               formRef={editFormRef}
@@ -97,7 +137,8 @@ const PerManage: React.FC = () => {
                 return true;
               }}
             >
-              <PerValueForm type={typeCode?perTypes[typeCode].text:null} parent={sel && sel.parent ? codes[sel.parent] : null} isEdit/>
+              <PerValueForm type={typeCode ? perTypes[typeCode].text : null}
+                            parent={sel && sel.parent ? codes[sel.parent] : null} isEdit/>
             </EditForm>
           </div>
         </div>}
