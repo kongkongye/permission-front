@@ -8,12 +8,22 @@
    2. umi
    3. antd
    4. eslint/prettier
-   5. @ant-design/pro-cli: antd pro命令行工具
+   5. @ant-design/pro-cli: antd pro 命令行工具
    6. @ant-design/pro-components
 
 ### 数据流
 
-简易数据流，使用@umijs/plugin-model插件。
+简易数据流，使用@umijs/plugin-model 插件。
+
+## 使用
+
+### 安装
+
+`pnpm i`
+
+### 启动
+
+`pnpm run dev`
 
 # Ant Design Pro
 
@@ -35,8 +45,7 @@ yarn
 
 ## Provided Scripts
 
-Ant Design Pro provides some useful script to help you quick start and build with web project, code style check and
-test.
+Ant Design Pro provides some useful script to help you quick start and build with web project, code style check and test.
 
 Scripts provided in `package.json`. It's safe to modify or add additional script:
 
@@ -72,5 +81,4 @@ npm test
 
 ## More
 
-You can view full document on our [official website](https://pro.ant.design). And welcome any feedback in
-our [github](https://github.com/ant-design/ant-design-pro).
+You can view full document on our [official website](https://pro.ant.design). And welcome any feedback in our [github](https://github.com/ant-design/ant-design-pro).

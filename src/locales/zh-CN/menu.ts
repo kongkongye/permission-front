@@ -6,6 +6,7 @@ export default {
   'menu.biz-manage': '业务对象管理',
   'menu.per-manage': '权限管理',
   'menu.per-bind-manage': '权限绑定',
+  'menu.system-manage': '系统管理',
 
   'menu.welcome': '欢迎',
   'menu.more-blocks': '更多区块',

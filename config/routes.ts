@@ -56,6 +56,12 @@
     component: './Permission/PerBindManage',
   },
   {
+    path: '/system-manage',
+    name: 'system-manage',
+    icon: 'apartment',
+    component: './Permission/SystemManage',
+  },
+  {
     path: '/',
     redirect: '/dept-manage',
   },
