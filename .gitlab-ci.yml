@@ -21,6 +21,8 @@ stages:          # List of stages for jobs, and their order of execution
 build:
   stage: build
   image: node:18
+  tags:
+    - nodejs
   before_script:
     - npm config set registry https://registry.npmmirror.com/
     - npm i -g pnpm
