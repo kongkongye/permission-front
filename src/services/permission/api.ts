@@ -8,7 +8,7 @@ import qs from 'qs';
 export function useListDepts(ready: boolean = false) {
   return usePost<PerAPI.Dept[]>('/admin/dept/query', {
     data: qs.stringify({
-      queryType: 'list',
+      qType: 'list',
     }),
   }, {
     ready,
@@ -19,7 +19,7 @@ export function useListPerValues(typeCode?: string) {
   return usePost<PerAPI.PerValue[]>('/admin/per/queryPerValue', {
     data: qs.stringify({
       typeCode: typeCode || 'none',
-      queryType: 'list',
+      qType: 'list',
     }),
   });
 }
@@ -30,7 +30,7 @@ export function useListPerValueBriefs(typeCode?: string, filterCode?: string, fi
       typeCode: typeCode || 'none',
       filterCodes: filterCode ? JSON.stringify([filterCode]) : null,
       filterContainSub,
-      queryType: 'list',
+      qType: 'list',
     }),
   }, {
     refreshDeps: [typeCode, filterCode, filterContainSub],
@@ -62,7 +62,7 @@ export async function pageRoles(params: any, sort: any, filter: any) {
       ...searchParamsHandled,
       pageSize,
       page,
-      queryType: 'page',
+      qType: 'page',
     }),
   }).then(parsePage);
 }
@@ -85,7 +85,7 @@ export async function pageUsers(params: any, sort: any, filter: any) {
       ...searchParamsHandled,
       pageSize,
       page,
-      queryType: 'page',
+      qType: 'page',
     }),
   }).then(parsePage).then((res) => {
     for (const e of res.data!) {
@@ -149,7 +149,7 @@ export async function listUserRoles(params: any, sort: any, filter: any) {
   return post<PerAPI.UserRole[]>('/admin/user/queryUserRole', {
     data: qs.stringify({
       ...params,
-      queryType: 'list',
+      qType: 'list',
     }),
   });
 }
@@ -157,7 +157,7 @@ export async function listUserRoles(params: any, sort: any, filter: any) {
 export function useListBizDirs(ready: boolean = false) {
   return usePost<PerAPI.Dept[]>('/admin/per/queryBizDir', {
     data: qs.stringify({
-      queryType: 'list',
+      qType: 'list',
     }),
   }, {
     ready,
@@ -187,7 +187,7 @@ export async function pageBiz(params: any, sort: any, filter: any) {
       ...searchParamsHandled,
       pageSize,
       page,
-      queryType: 'page',
+      qType: 'page',
     }),
   }).then(parsePage);
 }
@@ -196,7 +196,7 @@ export function listPerTypes(params: any) {
   return post<PerAPI.PerType[]>('/admin/per/queryPerType', {
     data: qs.stringify({
       ...params,
-      queryType: 'list',
+      qType: 'list',
     }),
   });
 }
@@ -213,7 +213,7 @@ export async function listPerValues(params: any, sort: any, filter: any) {
   return post<PerAPI.PerValue[]>('/admin/per/queryPerValue', {
     data: qs.stringify({
       ...searchParamsHandled,
-      queryType: 'list',
+      qType: 'list',
     }),
   });
 }
@@ -222,7 +222,7 @@ export async function getPerValue(params: any) {
   return post<PerAPI.PerValue[]>('/admin/per/queryPerValue', {
     data: qs.stringify({
       ...params,
-      queryType: 'get',
+      qType: 'get',
     }),
   });
 }
@@ -231,7 +231,7 @@ export async function listPerBindBriefs(params: any) {
   return post<PerAPI.PerBindBrief[]>('/admin/per/queryPerBindBrief', {
     data: qs.stringify({
       ...params,
-      queryType: 'list',
+      qType: 'list',
     }),
   });
 }
