@@ -1,7 +1,7 @@
 import EditForm from '@/components/EditForm';
 import UserForm from '@/pages/Permission/UserManage/components/UserForm';
-import {disableUser, pageUsers, saveUser} from '@/services/permission/api';
-import {DownOutlined} from '@ant-design/icons';
+import { disableUser, pageUsers, saveUser } from '@/services/permission/api';
+import { DownOutlined } from '@ant-design/icons';
 import {
   ActionType,
   FormInstance,
@@ -10,14 +10,24 @@ import {
   ProFormSwitch,
   ProTable,
 } from '@ant-design/pro-components';
-import {Button, Dropdown, Menu, message, Modal, Popconfirm, Popover, Space, TreeSelect} from 'antd';
-import React, {useCallback, useRef} from 'react';
-import {useModel} from "@umijs/max";
-import UserDeptManage from "@/pages/Permission/UserManage/components/UserDeptManage";
-import UserRoleManage from "@/pages/Permission/UserManage/components/UserRoleManage";
+import {
+  Button,
+  Dropdown,
+  Menu,
+  message,
+  Modal,
+  Popconfirm,
+  Popover,
+  Space,
+  TreeSelect,
+} from 'antd';
+import React, { useCallback, useRef } from 'react';
+import { useModel } from '@umijs/max';
+import UserDeptManage from '@/pages/Permission/UserManage/components/UserDeptManage';
+import UserRoleManage from '@/pages/Permission/UserManage/components/UserRoleManage';
 
 const UserManage: React.FC = () => {
-  const {depts, treeData, refresh} = useModel('useDepts');
+  const { depts, treeData, refresh } = useModel('useDepts');
   const actionRef = useRef<ActionType>();
   const formRef = useRef<FormInstance>();
   const [sel, setSel] = React.useState<PerAPI.User>();
@@ -50,10 +60,10 @@ const UserManage: React.FC = () => {
       title: `确认 ${disabled ? '启用' : '禁用'} 用户'${user.name}'吗？`,
       onOk: async () => {
         await disableUser(user.id, !disabled);
-        actionRef.current?.reload()
-        message.success(disabled? '启用成功！': '禁用成功！');
-      }
-    })
+        actionRef.current?.reload();
+        message.success(disabled ? '启用成功！' : '禁用成功！');
+      },
+    });
   }, []);
 
   const columns: ProColumns<PerAPI.User>[] = [
@@ -66,7 +76,7 @@ const UserManage: React.FC = () => {
           <Popover
             placement="left"
             trigger="click"
-            content={<ProFormSwitch label="包含子部门" name="containSubDept"/>}
+            content={<ProFormSwitch label="包含子部门" name="containSubDept" />}
           >
             {treeData && treeData.length > 0 && (
               <TreeSelect
@@ -85,6 +95,10 @@ const UserManage: React.FC = () => {
       dataIndex: 'name',
     },
     {
+      title: '昵称',
+      dataIndex: 'nickname',
+    },
+    {
       title: '编码',
       dataIndex: 'code',
     },
@@ -92,8 +106,8 @@ const UserManage: React.FC = () => {
       title: '禁用',
       dataIndex: 'disabled',
       valueEnum: {
-        true: {text: '禁用', status: 'Error'},
-        false: {text: '启用', status: 'Success'},
+        true: { text: '禁用', status: 'Error' },
+        false: { text: '启用', status: 'Success' },
       },
     },
     {
@@ -108,32 +122,50 @@ const UserManage: React.FC = () => {
       valueType: 'option',
       render: (dom, entity) => [
         <Dropdown.Button
-          key='1'
-          icon={<DownOutlined/>}
-          overlay={<Menu
-            items={[
-              {
-                key: '2',
-                label: <span onClick={() => {
-                  userDeptManageCallback(entity);
-                }
-                }>部门设置</span>,
-              },{
-                key: '3',
-                label: <span onClick={() => {
-                  userRoleManageCallback(entity);
-                }
-                }>角色设置</span>,
-              },
-              {
-                key: '4',
-                label: <span onClick={() => {
-                  disableCallback(entity);
-                }
-                }>{entity.disabled?'启用':'禁用'}</span>,
-              },
-            ]}
-          />}
+          key="1"
+          icon={<DownOutlined />}
+          overlay={
+            <Menu
+              items={[
+                {
+                  key: '2',
+                  label: (
+                    <span
+                      onClick={() => {
+                        userDeptManageCallback(entity);
+                      }}
+                    >
+                      部门设置
+                    </span>
+                  ),
+                },
+                {
+                  key: '3',
+                  label: (
+                    <span
+                      onClick={() => {
+                        userRoleManageCallback(entity);
+                      }}
+                    >
+                      角色设置
+                    </span>
+                  ),
+                },
+                {
+                  key: '4',
+                  label: (
+                    <span
+                      onClick={() => {
+                        disableCallback(entity);
+                      }}
+                    >
+                      {entity.disabled ? '启用' : '禁用'}
+                    </span>
+                  ),
+                },
+              ]}
+            />
+          }
           onClick={() => editCallback(entity)}
         >
           编辑
@@ -157,22 +189,22 @@ const UserManage: React.FC = () => {
       toolbar={{
         actions: [
           <EditForm
-            key='new'
+            key="new"
             formRef={newFormRef}
             title="用户"
             isEdit={false}
             onFinish={async (formData) => {
               await saveUser(formData);
               refresh();
-              actionRef.current?.reload()
+              actionRef.current?.reload();
               message.success('添加成功！');
               return true;
             }}
           >
-            <UserForm/>
+            <UserForm />
           </EditForm>,
           <EditForm
-            key='edit'
+            key="edit"
             visible={editVisible}
             onVisibleChange={(visible) => {
               if (visible) {
@@ -188,26 +220,37 @@ const UserManage: React.FC = () => {
               await saveUser(formData);
               setEditVisible(false);
               refresh();
-              actionRef.current?.reload()
+              actionRef.current?.reload();
               message.success('更新成功！');
               return true;
             }}
             modalProps={{
               onCancel: () => {
                 setEditVisible(false);
-              }
+              },
             }}
             noTrigger
           >
-            <UserForm isEdit/>
+            <UserForm isEdit />
           </EditForm>,
-          <UserDeptManage key='userDept' user={sel} onClose={() => {
-            setUserDeptManageVisible(false)
-          }} visible={userDeptManageVisible}/>,
-          <div key='userRole'>
-            {userRoleManageVisible && <UserRoleManage user={sel} onClose={() => {
-              setUserRoleManageVisible(false)
-            }} visible={userRoleManageVisible}/>}
+          <UserDeptManage
+            key="userDept"
+            user={sel}
+            onClose={() => {
+              setUserDeptManageVisible(false);
+            }}
+            visible={userDeptManageVisible}
+          />,
+          <div key="userRole">
+            {userRoleManageVisible && (
+              <UserRoleManage
+                user={sel}
+                onClose={() => {
+                  setUserRoleManageVisible(false);
+                }}
+                visible={userRoleManageVisible}
+              />
+            )}
           </div>,
         ],
       }}
