@@ -40,9 +40,17 @@ build:
 pushToWx:
   stage: build
   image: bitnami/git
+  resource_group: wx-resource-group
   tags:
     - git-client
   before_script:
-    - git remote add wx git@192.168.0.174:kongkongye/permission-frontend.git
+    - mkdir ~/.ssh/
+    - echo "${CI_KNOWN_HOSTS}" > ~/.ssh/known_hosts
+    - echo "${SSH_PUSH_KEY}" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - git config user.email "kongkongye@163.com"
+    - git config user.name "kongkongye"
+    - git remote remove wx || true
+    - git remote add wx git@$CI_SERVER_HOST:$CI_PROJECT_PATH.git
   script:
-    - git push -u wx master
+    - git push wx master
