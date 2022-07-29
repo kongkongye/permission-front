@@ -36,3 +36,13 @@ build:
         - pnpm-lock.yaml
     paths:
       - .pnpm-store
+
+pushToWx:
+  stage: build
+  image: bitnami/git
+  tags:
+    - git-client
+  before_script:
+    - git remote add wx git@192.168.0.174:kongkongye/permission-frontend.git
+  script:
+    - git push wx master
