@@ -45,4 +45,4 @@ pushToWx:
   before_script:
     - git remote add wx git@192.168.0.174:kongkongye/permission-frontend.git
   script:
-    - git push wx master
+    - git push -u wx master
