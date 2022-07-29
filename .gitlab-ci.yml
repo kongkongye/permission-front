@@ -48,6 +48,7 @@ pushToWx:
     - echo "${CI_KNOWN_HOSTS}" > ~/.ssh/known_hosts
     - echo "${SSH_PUSH_KEY}" > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
+    - ssh-agent bash
     - ssh-add ~/.ssh/id_rsa
     - git config user.email "kongkongye@163.com"
     - git config user.name "kongkongye"
