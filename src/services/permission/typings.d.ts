@@ -52,6 +52,7 @@ declare namespace PerAPI {
     name: string;
     note?: string;
     filter?: string;
+    bizCode?: string;
   };
   type PerValue = {
     id: number;
@@ -76,5 +77,10 @@ declare namespace PerAPI {
   };
   type PerBindBrief = {
     perCode: string;
+  };
+  type BizPerType = {
+    id: number;
+    bizCode: string;
+    perTypeCode: string;
   };
 }

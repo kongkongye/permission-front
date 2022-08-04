@@ -1,18 +1,22 @@
 // @ts-ignore
 /* eslint-disable */
-import {usePost} from '@/hooks/useReq';
+import { usePost } from '@/hooks/useReq';
 import { post } from '@/util/req';
-import {handleSearchParams, parsePage} from '@/util/util';
+import { handleSearchParams, parsePage } from '@/util/util';
 import qs from 'qs';
 
 export function useListDepts(ready: boolean = false) {
-  return usePost<PerAPI.Dept[]>('/admin/dept/query', {
-    data: qs.stringify({
-      qType: 'list',
-    }),
-  }, {
-    ready,
-  });
+  return usePost<PerAPI.Dept[]>(
+    '/admin/dept/query',
+    {
+      data: qs.stringify({
+        qType: 'list',
+      }),
+    },
+    {
+      ready,
+    },
+  );
 }
 
 export function useListPerValues(typeCode?: string) {
@@ -24,17 +28,25 @@ export function useListPerValues(typeCode?: string) {
   });
 }
 
-export function useListPerValueBriefs(typeCode?: string, filterCode?: string, filterContainSub?: boolean) {
-  return usePost<PerAPI.PerValue[]>('/admin/per/queryPerValueBrief', {
-    data: qs.stringify({
-      typeCode: typeCode || 'none',
-      filterCodes: filterCode ? JSON.stringify([filterCode]) : null,
-      filterContainSub,
-      qType: 'list',
-    }),
-  }, {
-    refreshDeps: [typeCode, filterCode, filterContainSub],
-  });
+export function useListPerValueBriefs(
+  typeCode?: string,
+  filterCode?: string,
+  filterContainSub?: boolean,
+) {
+  return usePost<PerAPI.PerValue[]>(
+    '/admin/per/queryPerValueBrief',
+    {
+      data: qs.stringify({
+        typeCode: typeCode || 'none',
+        filterCodes: filterCode ? JSON.stringify([filterCode]) : null,
+        filterContainSub,
+        qType: 'list',
+      }),
+    },
+    {
+      refreshDeps: [typeCode, filterCode, filterContainSub],
+    },
+  );
 }
 
 export async function saveDept(data: PerAPI.Dept) {
@@ -46,7 +58,7 @@ export async function saveDept(data: PerAPI.Dept) {
 export async function delDept(id: number) {
   return post('/admin/dept/del', {
     data: qs.stringify({
-      id
+      id,
     }),
   });
 }
@@ -87,19 +99,21 @@ export async function pageUsers(params: any, sort: any, filter: any) {
       page,
       qType: 'page',
     }),
-  }).then(parsePage).then((res) => {
-    for (const e of res.data!) {
-      e.disabled = !!e.disabled
-    }
-    return res
-  });
+  })
+    .then(parsePage)
+    .then((res) => {
+      for (const e of res.data!) {
+        e.disabled = !!e.disabled;
+      }
+      return res;
+    });
 }
 
 export async function queryUserDepts(userCode: string) {
   return post('/auth/user/queryUserDepts', {
     data: qs.stringify({
       userCode,
-    })
+    }),
   });
 }
 
@@ -141,7 +155,7 @@ export async function setUserDepts(userCode: string, deptCodes: string[]) {
     data: qs.stringify({
       userCode,
       deptCodesStr: JSON.stringify(deptCodes),
-    })
+    }),
   });
 }
 
@@ -155,13 +169,17 @@ export async function listUserRoles(params: any, sort: any, filter: any) {
 }
 
 export function useListBizDirs(ready: boolean = false) {
-  return usePost<PerAPI.Dept[]>('/admin/per/queryBizDir', {
-    data: qs.stringify({
-      qType: 'list',
-    }),
-  }, {
-    ready,
-  });
+  return usePost<PerAPI.Dept[]>(
+    '/admin/per/queryBizDir',
+    {
+      data: qs.stringify({
+        qType: 'list',
+      }),
+    },
+    {
+      ready,
+    },
+  );
 }
 
 export async function saveBizDir(data: PerAPI.BizDir) {
@@ -236,7 +254,13 @@ export async function listPerBindBriefs(params: any) {
   });
 }
 
-export async function addPerBind(bindType: string, bindCode: string, typeCode: string, perCode: string, bizCode?: string) {
+export async function addPerBind(
+  bindType: string,
+  bindCode: string,
+  typeCode: string,
+  perCode: string,
+  bizCode?: string,
+) {
   return post('/admin/per/addPerBind', {
     data: qs.stringify({
       bizCode,
@@ -248,7 +272,13 @@ export async function addPerBind(bindType: string, bindCode: string, typeCode: s
   });
 }
 
-export async function delPerBind(bindType: string, bindCode: string, typeCode: string, perCode: string, bizCode?: string) {
+export async function delPerBind(
+  bindType: string,
+  bindCode: string,
+  typeCode: string,
+  perCode: string,
+  bizCode?: string,
+) {
   return post('/admin/per/delPerBind', {
     data: qs.stringify({
       bizCode,
@@ -258,4 +288,44 @@ export async function delPerBind(bindType: string, bindCode: string, typeCode: s
       perCode,
     }),
   });
+}
+
+export async function listBizPerType(params: any, sort: any, filter: any) {
+  return post<PerAPI.BizPerType[]>('/admin/per/queryBizPerType', {
+    data: qs.stringify({
+      ...params,
+      qType: 'list',
+    }),
+  });
+}
+
+export async function addBizPerType(bizCode: string, perTypeCode: string) {
+  return post('/admin/per/addBizPerType', {
+    data: qs.stringify({
+      bizCode,
+      perTypeCode,
+    }),
+  });
+}
+
+export async function delBizPerType(bizCode: string, perTypeCode: string) {
+  return post('/admin/per/delBizPerType', {
+    data: qs.stringify({
+      bizCode,
+      perTypeCode,
+    }),
+  });
+}
+
+export async function pagePerTypes(params: any, sort: any, filter: any) {
+  const { pageSize, current: page, ...searchParams } = params;
+  const searchParamsHandled = handleSearchParams(searchParams, ['code', 'name']);
+  return post<Common.Pagination<PerAPI.PerType>>('/admin/per/queryPerType', {
+    data: qs.stringify({
+      ...searchParamsHandled,
+      pageSize,
+      page,
+      qType: 'page',
+    }),
+  }).then(parsePage);
 }
