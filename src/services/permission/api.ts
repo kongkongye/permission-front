@@ -91,7 +91,7 @@ export async function pageUsers(params: any, sort: any, filter: any) {
   if (searchDept) {
     searchParams.deptCodes = JSON.stringify([searchDept]);
   }
-  const searchParamsHandled = handleSearchParams(searchParams, ['code', 'name']);
+  const searchParamsHandled = handleSearchParams(searchParams, ['code', 'name', 'nickname']);
   return post<Common.Pagination<PerAPI.User>>('/auth/user/query', {
     data: qs.stringify({
       ...searchParamsHandled,
