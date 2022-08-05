@@ -25,24 +25,22 @@ const PerManage: React.FC = () => {
     formRef.current?.setFieldsValue({
       bindPerType: undefined,
     });
-    if (selBiz) {
-      listPerTypes({
-        bizCode: selBiz?.code,
-      }).then((res) => {
-        if (res) {
-          const perTypes_ = {};
-          for (const e of res) {
-            perTypes_[e.code] = {
-              text: e.name,
-              filter: e.filter,
-            };
-          }
-          setPerTypes(perTypes_);
-        } else {
-          setPerTypes({});
+    listPerTypes({
+      bizCode: selBiz?.code,
+    }).then((res) => {
+      if (res) {
+        const perTypes_ = {};
+        for (const e of res) {
+          perTypes_[e.code] = {
+            text: e.name,
+            filter: e.filter,
+          };
         }
-      });
-    }
+        setPerTypes(perTypes_);
+      } else {
+        setPerTypes({});
+      }
+    });
   }, [selBiz]);
   const filterTypeCode = useMemo(() => {
     if (typeCode) {
