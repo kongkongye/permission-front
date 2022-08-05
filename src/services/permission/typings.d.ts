@@ -53,6 +53,10 @@ declare namespace PerAPI {
     note?: string;
     filter?: string;
     bizCode?: string;
+
+    key?: string;
+    title?: string;
+    value?: string;
   };
   type PerValue = {
     id: number;

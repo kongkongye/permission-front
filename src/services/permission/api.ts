@@ -329,3 +329,19 @@ export async function pagePerTypes(params: any, sort: any, filter: any) {
     }),
   }).then(parsePage);
 }
+
+export function useListPertypes(ready: boolean = false) {
+  return usePost<PerAPI.PerType[]>('/admin/per/queryPerType', {
+    data: qs.stringify({
+      qType: 'list',
+    }),
+  }, {
+    ready,
+  });
+}
+
+export async function savePerType(data: PerAPI.PerType) {
+  return post('/admin/per/savePerType', {
+    data: qs.stringify(data),
+  });
+}
