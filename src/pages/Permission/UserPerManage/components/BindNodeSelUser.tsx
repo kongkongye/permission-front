@@ -35,6 +35,10 @@ const Index: React.FC<Props<any>> = <T, >(props: Props<T>) => {
       dataIndex: 'code',
     },
     {
+      title: '昵称',
+      dataIndex: 'nickname',
+    },
+    {
       title: '备注',
       dataIndex: 'note',
       hideInSearch: true,
