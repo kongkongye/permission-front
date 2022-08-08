@@ -1,7 +1,4 @@
 import {
-  addPerBind,
-  delPerBind,
-  listPerBindBriefs,
   listPerTypes,
   listUserPerBindBriefs
 } from '@/services/permission/api';
@@ -19,7 +16,7 @@ import styles from './index.less';
 import usePerValueBriefs from '@/hooks/usePerValueBriefs';
 import BindBizSel from '@/pages/Permission/UserPerManage/components/BindBizSel';
 import { FormInstance } from 'antd/es';
-import BindNodeSelUser from "./components/BindNodeSelUser";
+import BindNodeSelUser from "@/pages/Permission/UserPerManage/components/BindNodeSelUser";
 
 const UserPerManage: React.FC = () => {
   const [perTypes, setPerTypes] = useState({});
@@ -186,7 +183,7 @@ const UserPerManage: React.FC = () => {
         <BindNodeSelUser
           visible={bindUserVisible}
           onSel={selUserCallback}
-          onClose={() => setBindBizVisible(false)}
+          onClose={() => setBindUserVisible(false)}
         />
       </Content>
     </Layout>

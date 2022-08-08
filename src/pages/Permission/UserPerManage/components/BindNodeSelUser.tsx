@@ -58,10 +58,6 @@ const Index: React.FC<Props<any>> = <T, >(props: Props<T>) => {
       width='80%'
       title={<div>
         <span>选择用户</span>
-        <Button size='small' type='link' onClick={() => {
-          onSel()
-        }
-        }>取消选择</Button>
       </div>}
       footer={null}
       onCancel={onClose}
