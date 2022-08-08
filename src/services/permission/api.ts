@@ -345,3 +345,12 @@ export async function savePerType(data: PerAPI.PerType) {
     data: qs.stringify(data),
   });
 }
+
+export async function listUserPerBindBriefs(params: any) {
+  return post('/admin/per/queryUserPerBindBrief', {
+    data: qs.stringify({
+      ...params,
+      qType: 'list',
+    }),
+  });
+}

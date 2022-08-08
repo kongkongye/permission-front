@@ -68,6 +68,12 @@
     component: './Permission/PerTypeManage',
   },
   {
+    path: '/user-per-manage',
+    name: 'user-per-manage',
+    icon: 'apartment',
+    component: './Permission/UserPerManage',
+  },
+  {
     path: '/',
     redirect: '/dept-manage',
   },

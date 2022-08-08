@@ -8,6 +8,7 @@ export default {
   'menu.per-type-manage': '权限类型管理',
   'menu.per-bind-manage': '权限绑定',
   'menu.system-manage': '系统管理',
+  'menu.user-per-manage': '用户权限查询',
 
   'menu.welcome': '欢迎',
   'menu.more-blocks': '更多区块',
