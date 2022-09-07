@@ -20,9 +20,7 @@ stages:          # List of stages for jobs, and their order of execution
 
 build:
   stage: build
-  image:
-    name: ubuntu:22.10
-    pull_policy: if-not-present
+  image: node:18
   tags:
     - nodejs
   before_script:
@@ -45,9 +43,7 @@ build:
 #推送到另外的仓库
 push:
   stage: build
-  image:
-    name: ubuntu:22.10
-    pull_policy: if-not-present
+  image: bitnami/git
   resource_group: push-resource-group
   tags:
     - git-client
@@ -66,9 +62,7 @@ push:
 #部署到生产环境
 deploy:
   stage: deploy
-  image:
-    name: ubuntu:22.10
-    pull_policy: if-not-present
+  image: ubuntu:22.10
   tags:
     - ubuntu
   before_script:
