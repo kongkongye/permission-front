@@ -22,7 +22,7 @@ build:
   stage: build
   image: node:18
   tags:
-    - nodejs
+    - default
   before_script:
     - npm config set registry https://registry.npmmirror.com/
     - npm i -g pnpm
@@ -46,7 +46,7 @@ push:
   image: bitnami/git
   resource_group: push-resource-group
   tags:
-    - git-client
+    - default
   before_script:
     - mkdir ~/.ssh/
     - echo "${CI_KNOWN_HOSTS}" > ~/.ssh/known_hosts
@@ -64,7 +64,7 @@ deploy:
   stage: deploy
   image: ubuntu:22.10
   tags:
-    - ubuntu
+    - default
   before_script:
     - apt-get update -y
     - apt-get install -y sshpass
