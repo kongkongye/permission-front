@@ -64,7 +64,7 @@ deploy:
   stage: deploy
   image: ubuntu:22.10
   tags:
-    - git-client
+    - ubuntu
   before_script:
     - apt-get update -y
     - apt-get install -y sshpass
