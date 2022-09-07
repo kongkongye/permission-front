@@ -71,4 +71,4 @@ deploy:
   script:
     - ls
     - sshpass -p "$DEPLOY_PROD_PASSWORD" scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ./dist/* $DEPLOY_PROD_USER@$DEPLOY_PROD_HOST:$DEPLOY_PROD_PATH
-    - sshpass -p "$DEPLOY_PROD_PASSWORD" ssh ${DEPLOY_PROD_USER}@${DEPLOY_PROD_HOST} "bash -c $DEPLOY_PROD_SCRIPT"
+    - sshpass -p "$DEPLOY_PROD_PASSWORD" ssh ${DEPLOY_PROD_USER}@${DEPLOY_PROD_HOST} bash -c $DEPLOY_PROD_SCRIPT
