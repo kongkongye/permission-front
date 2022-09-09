@@ -65,9 +65,6 @@ deploy:
   stage: deploy
   tags:
     - default
-  before_script:
-    - apt-get update -y
-    - apt-get install -y sshpass
   script:
     - sshpass -p "$DEPLOY_PROD_PASSWORD" scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ./dist/* $DEPLOY_PROD_USER@$DEPLOY_PROD_HOST:$DEPLOY_PROD_PATH
     - sshpass -p "$DEPLOY_PROD_PASSWORD" ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${DEPLOY_PROD_USER}@${DEPLOY_PROD_HOST} 'bash -s < /opt/permission/start.sh'
