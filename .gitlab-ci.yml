@@ -50,13 +50,13 @@ push:
     - default
   before_script:
     - mkdir ~/.ssh/
-    - echo "${CI_KNOWN_HOSTS}" > ~/.ssh/known_hosts
+    - echo "${SSH_KNOWN_HOSTS}" > ~/.ssh/known_hosts
     - echo "${SSH_PUSH_KEY}" > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
     - git config user.email "$GITLAB_USER_EMAIL"
     - git config user.name "$GITLAB_USER_NAME"
     - git remote remove wx || true
-    - git remote add wx git@$CI_SERVER_HOST:$CI_PROJECT_PATH.git
+    - git remote add wx git@$DEPLOY_SERVER_HOST:$CI_PROJECT_PATH.git
   script:
     - git push wx HEAD:refs/heads/master
 
