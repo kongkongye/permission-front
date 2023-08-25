@@ -83,6 +83,7 @@ const UserPerManage: React.FC = () => {
     filterCodeFormRef.current?.setFieldsValue({
       filterCode: undefined,
     });
+    setFilterCode(undefined);
   }, [typeCode]);
   const selBizCallback = useCallback((bizDirs?: PerAPI.BizDir[], biz?: PerAPI.Biz) => {
     setSelBiz(biz);
