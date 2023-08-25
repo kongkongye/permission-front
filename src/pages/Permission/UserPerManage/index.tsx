@@ -176,7 +176,6 @@ const UserPerManage: React.FC = () => {
         )}
         {typeCode && treeData && treeData.length > 0 && (
           <Tree.DirectoryTree
-            checkStrictly
             checkable
             disabled
             checkedKeys={checkedKeys}
