@@ -178,6 +178,7 @@ const UserPerManage: React.FC = () => {
           <Tree.DirectoryTree
             checkStrictly
             checkable
+            disabled
             checkedKeys={checkedKeys}
             className={styles.tree}
             treeData={treeData}
