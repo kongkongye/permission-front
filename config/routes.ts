@@ -32,46 +32,60 @@
     component: './Permission/UserManage',
   },
   {
-    path: '/biz-dir-manage',
-    name: 'biz-dir-manage',
-    icon: 'apartment',
-    component: './Permission/BizDirManage',
+    path: '/biz',
+    name: 'biz',
+    icon: 'folder',
+    routes: [
+      {
+        path: '/biz/biz-dir-manage',
+        name: 'biz-dir-manage',
+        icon: 'apartment',
+        component: './Permission/BizDirManage',
+      },
+      {
+        path: '/biz/biz-manage',
+        name: 'biz-manage',
+        icon: 'apartment',
+        component: './Permission/BizManage',
+      },
+    ]
   },
   {
-    path: '/biz-manage',
-    name: 'biz-manage',
-    icon: 'apartment',
-    component: './Permission/BizManage',
-  },
-  {
-    path: '/per-manage',
-    name: 'per-manage',
-    icon: 'apartment',
-    component: './Permission/PerManage',
-  },
-  {
-    path: '/per-bind-manage',
-    name: 'per-bind-manage',
-    icon: 'apartment',
-    component: './Permission/PerBindManage',
+    path: '/per',
+    name: 'per',
+    icon: 'appstore',
+    routes: [
+      {
+        path: '/per/per-manage',
+        name: 'per-manage',
+        icon: 'apartment',
+        component: './Permission/PerManage',
+      },
+      {
+        path: '/per/per-bind-manage',
+        name: 'per-bind-manage',
+        icon: 'apartment',
+        component: './Permission/PerBindManage',
+      },
+      {
+        path: '/per/per-type-manage',
+        name: 'per-type-manage',
+        icon: 'apartment',
+        component: './Permission/PerTypeManage',
+      },
+      {
+        path: '/per/user-per-manage',
+        name: 'user-per-manage',
+        icon: 'apartment',
+        component: './Permission/UserPerManage',
+      },
+    ]
   },
   {
     path: '/system-manage',
     name: 'system-manage',
-    icon: 'apartment',
+    icon: 'setting',
     component: './Permission/SystemManage',
-  },
-  {
-    path: '/per-type-manage',
-    name: 'per-type-manage',
-    icon: 'apartment',
-    component: './Permission/PerTypeManage',
-  },
-  {
-    path: '/user-per-manage',
-    name: 'user-per-manage',
-    icon: 'apartment',
-    component: './Permission/UserPerManage',
   },
   {
     path: '/',
