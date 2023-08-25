@@ -54,6 +54,7 @@ const UserPerManage: React.FC = () => {
   }, [typeCode, perTypes]);
   const [filterCode, setFilterCode] = useState<string>();
   const [filterContainSub, setFilterContainSub] = useState<boolean>(false);
+  const filterCodeFormRef = useRef<FormInstance>(null);
 
   const [bindBizVisible, setBindBizVisible] = useState(false);
   const [bindUserVisible, setBindUserVisible] = useState(false);
@@ -77,6 +78,12 @@ const UserPerManage: React.FC = () => {
       setCheckedKeys([]);
     }
   }, [selBiz,selUser,typeCode])
+  //when typeCode changed, clear filterCode
+  useEffect(() => {
+    filterCodeFormRef.current?.setFieldsValue({
+      filterCode: undefined,
+    });
+  }, [typeCode]);
   const selBizCallback = useCallback((bizDirs?: PerAPI.BizDir[], biz?: PerAPI.Biz) => {
     setSelBiz(biz);
     setBindBizVisible(false);
@@ -130,9 +137,10 @@ const UserPerManage: React.FC = () => {
               },
             }}
           />
-          <Form>
+          <Form ref={filterCodeFormRef}>
             <ProFormGroup>
               <ProFormTreeSelect
+                name='filterCode'
                 width="md"
                 allowClear
                 disabled={!filterTreeData || filterTreeData.length === 0}
